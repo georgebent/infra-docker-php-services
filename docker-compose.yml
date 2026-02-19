@@ -7,7 +7,6 @@ services:
   environment:
    POSTGRES_USER: ${POSTGRES_USER}
    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-   POSTGRES_DB: ${POSTGRES_DB}
   ports:
    - '5432:5432'
   volumes:
@@ -25,13 +24,13 @@ services:
   networks:
    default:
     ipv4_address: ${PHP_IP}
-  environment:
-   PHP_IDE_CONFIG: "serverName=services.loc"
   extra_hosts:
    - "host.docker.internal:host-gateway"
  nginx:
   container_name: ${NAME}_nginx
   image: nginx:1.15.8
+  ports:
+   - '8080:80'
   volumes:
    - "./.data/nginx/logs:/var/log/nginx"
    - "./etc/nginx/:/etc/nginx/conf.d/"

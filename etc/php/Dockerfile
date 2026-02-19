@@ -1,7 +1,7 @@
 FROM php:8.4-fpm
 
 # Set working directory
-WORKDIR /srv/src/www
+WORKDIR /srv/src
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -33,13 +33,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN docker-php-ext-install pdo_mysql zip exif pcntl
 RUN docker-php-ext-install soap
 
-RUN /bin/bash pecl install xdebug \
+RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 # Add user
 RUN groupadd -g 1001 www
 RUN useradd -u 1001 -ms /bin/bash -g www www
-
-RUN echo 'memory_limit = 2G' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
 
 USER www
