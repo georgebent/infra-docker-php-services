@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
+    libicu-dev \
+    libonig-dev \
     locales \
     zip \
     libzip-dev\
@@ -32,6 +34,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install extensions
 RUN docker-php-ext-install pdo_mysql zip exif pcntl
 RUN docker-php-ext-install soap
+RUN docker-php-ext-configure intl && docker-php-ext-install intl
+RUN docker-php-ext-install mbstring opcache
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
