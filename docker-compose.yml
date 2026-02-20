@@ -26,8 +26,24 @@ services:
     ipv4_address: ${PHP_IP}
   extra_hosts:
    - "host.docker.internal:host-gateway"
+ mongo:
+  container_name: ${NAME}_mongo
+  image: mongo:7
+  restart: on-failure
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+   MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+  ports:
+   - '27017:27017'
+  volumes:
+   - /data/mongo/data:/data/db
+  networks:
+   default:
+    ipv4_address: ${MONGO_IP}
  nginx:
   container_name: ${NAME}_nginx
+  depends_on:
+   - php
   image: nginx:1.15.8
   ports:
    - '8080:80'
