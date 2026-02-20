@@ -1,3 +1,5 @@
 .idea
 .env
 .data
+etc/nginx/*.conf
+!etc/nginx/example.conf
