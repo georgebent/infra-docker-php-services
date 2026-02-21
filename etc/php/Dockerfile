@@ -37,6 +37,10 @@ RUN docker-php-ext-install soap
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 RUN docker-php-ext-install mbstring opcache
 
+RUN apt-get install -y libssl-dev \
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 

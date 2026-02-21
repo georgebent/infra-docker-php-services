@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Docker-based infrastructure for running multiple PHP applications locally. It provides PHP-FPM 8.4, PostgreSQL 15, and Nginx as isolated services in a custom bridge network. Application source code lives in a **sibling directory** (`../services/`) that is volume-mounted into both the PHP and Nginx containers.
+A Docker-based infrastructure for running multiple PHP applications locally. It provides PHP-FPM 8.4, PostgreSQL 15, MongoDB, and Nginx as isolated services in a custom bridge network. Application source code lives in a **sibling directory** (`../services/`) that is volume-mounted into both the PHP and Nginx containers.
 
 ## Setup
 
@@ -29,6 +29,7 @@ docker-compose logs -f nginx
 
 # Open a shell in the PHP container
 docker-compose exec php bash
+docker exec -it services_docker_php bash
 
 # Run Composer inside the container
 docker-compose exec php composer install --working-dir=/srv/src/<app-name>
@@ -43,11 +44,12 @@ docker-php-services/         ← this repo (infrastructure only)
 
 **Network:** Custom bridge, subnet `172.10.1.0/16`
 
-| Service    | Container name              | IP            | Port |
-|------------|-----------------------------|---------------|------|
-| PHP-FPM    | `services_docker_php`       | 172.10.1.10   | 9000 |
-| PostgreSQL  | `services_docker_postgres`  | 172.10.1.11   | 5432 |
-| Nginx      | `services_docker_nginx`     | 172.10.1.30   | 80   |
+| Service    | Container name              | IP            | Port  |
+|------------|-----------------------------|---------------|-------|
+| PHP-FPM    | `services_docker_php`       | 172.10.1.10   | 9000  |
+| PostgreSQL  | `services_docker_postgres`  | 172.10.1.11   | 5432  |
+| MongoDB    | `services_docker_mongo`     | 172.10.1.12   | 27017 |
+| Nginx      | `services_docker_nginx`     | 172.10.1.30   | 80    |
 
 **Request flow:** Nginx (port 80) → FastCGI → `services_docker_php:9000` → PostgreSQL
 
@@ -56,7 +58,7 @@ Nginx config files placed in `./etc/nginx/` are mounted directly to `/etc/nginx/
 ## PHP Container
 
 - Base: `php:8.4-fpm`, runs as non-root user `www` (uid 1001)
-- PHP extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, XDebug
+- PHP extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mongodb`, XDebug
 - Composer available globally
 
 ## XDebug
