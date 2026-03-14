@@ -45,7 +45,7 @@ services:
   container_name: ${NAME}_nginx
   depends_on:
    - php
-  image: nginx:1.15.8
+  image: nginx:1.28.2-alpine
   ports:
    - '8080:80'
   volumes:
