@@ -20,6 +20,7 @@ services:
    context: ./etc/php
   volumes:
    - "./../services/:/srv/src/"
+   - "./etc/php/config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini"
    - "./etc/php/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
   networks:
    default:
@@ -61,4 +62,3 @@ networks:
    driver: default
    config:
     - subnet: ${SUBNET}
-

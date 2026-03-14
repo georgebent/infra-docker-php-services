@@ -1,4 +1,4 @@
-FROM php:8.4-fpm
+FROM php:8.5-fpm
 
 # Set working directory
 WORKDIR /srv/src
@@ -25,17 +25,17 @@ RUN apt-get update && apt-get install -y \
 
 # Install Postgre PDO
 RUN apt-get install -y libpq-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install extensions
-RUN docker-php-ext-install pdo_mysql zip exif pcntl
-RUN docker-php-ext-install soap
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo_mysql zip exif pcntl
+RUN docker-php-ext-install soap xml
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
-RUN docker-php-ext-install mbstring opcache
+RUN docker-php-ext-install mbstring
 
 RUN apt-get install -y libssl-dev \
     && pecl install mongodb \
