@@ -1,6 +1,6 @@
 # Docker PHP Services
 
-Docker-based infrastructure for running multiple PHP applications locally. It provides PHP-FPM 8.4, PostgreSQL 15, MongoDB, and Nginx as isolated services in a custom bridge network. Application source code lives in a sibling directory (`../services/`) that is volume-mounted into both the PHP and Nginx containers.
+Docker-based infrastructure for running multiple PHP applications locally. It provides PHP-FPM 8.5, PostgreSQL 15, MongoDB, and Nginx as isolated services in a custom bridge network. Application source code lives in a sibling directory (`../services/`) that is volume-mounted into both the PHP and Nginx containers.
 
 ## Requirements
 
@@ -58,9 +58,10 @@ Nginx config files placed in `./etc/nginx/` are mounted directly to `/etc/nginx/
 
 ## PHP Container
 
-- Base: `php:8.4-fpm`, runs as non-root user `www` (uid 1001)
-- Extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mongodb`, XDebug
+- Base: `php:8.5-fpm`, runs as non-root user `www` (uid 1001)
+- Extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mbstring`, `intl`, `mongodb`, XDebug
 - Composer available globally
+- OPcache is configured for local development in `etc/php/config/opcache.ini`
 
 ## XDebug
 
