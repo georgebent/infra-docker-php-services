@@ -1,6 +1,6 @@
 # Docker PHP Services
 
-Docker-based infrastructure for running multiple PHP applications locally. It provides PHP-FPM 8.5, PostgreSQL 15, MongoDB, and Nginx as isolated services in a custom bridge network. Application source code lives in a sibling directory (`../services/`) that is volume-mounted into both the PHP and Nginx containers.
+Docker-based infrastructure for running multiple PHP applications locally. It provides PHP-FPM 8.5, PostgreSQL 15, MongoDB, Nginx, and a Mailpit mail trap as isolated services in a custom bridge network. Application source code lives in a sibling directory (`../services/`) that is volume-mounted into both the PHP and Nginx containers.
 
 ## Requirements
 
@@ -51,6 +51,7 @@ Network: Custom bridge, subnet `172.20.0.0/16`
 | PostgreSQL  | `services_docker_postgres` | 172.20.0.11  | `5432:5432` |
 | MongoDB     | `services_docker_mongo`    | 172.20.0.12  | `27017:27017` |
 | Nginx       | `services_docker_nginx`    | 172.20.0.30  | `8080:80` |
+| Mailpit     | `services_docker_mailpit`  | 172.20.0.14  | `1025:1025`, `8025:8025` |
 
 Request flow: browser → host `:8080` → Nginx `:80` → FastCGI `php:9000` → PostgreSQL
 
@@ -71,6 +72,18 @@ Configured in `etc/php/config/xdebug.ini`:
 - Port: `9003`
 - Client host: `host.docker.internal` (Docker Desktop). On Linux, `extra_hosts: host.docker.internal:host-gateway` in `docker-compose.yml` handles this.
 - `PHP_IDE_CONFIG` is not set in `docker-compose.yml`; configure it in your IDE or container environment if your debugger setup needs a fixed server name.
+
+## Mail Trap (Mailpit)
+
+All outgoing mail in local development goes to [Mailpit](https://mailpit.axllent.org/) instead of a real SMTP server.
+
+- SMTP from inside the network: `mailpit:1025` (or `172.20.0.14:1025`)
+- Web UI: `http://<host>:8025`
+- HTTP API for automated tests: `GET http://<host>:8025/api/v1/messages`
+
+Messages are stored in `./.data/mailpit/mailpit.db` and survive a restart of the environment. The trap keeps at most `MP_MAX_MESSAGES` (5000) messages, dropping the oldest.
+
+Mailpit accepts everything and forwards nothing — that is the point. Never configure it as a transport in a production configuration.
 
 ## Adding a New Application
 

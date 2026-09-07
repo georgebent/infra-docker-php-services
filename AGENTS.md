@@ -30,6 +30,7 @@
   - PostgreSQL: `services_docker_postgres`, `172.20.0.11`, published `5432:5432`
   - MongoDB: `services_docker_mongo`, `172.20.0.12`, published `27017:27017`
   - Nginx: `services_docker_nginx`, `172.20.0.30`, published `8080:80`
+  - Mailpit: `services_docker_mailpit`, `172.20.0.14`, published `1025:1025` and `8025:8025`
 - Request flow: browser -> host `:8080` -> Nginx `:80` -> FastCGI `php:9000` -> PostgreSQL
 
 ## Nginx Conventions

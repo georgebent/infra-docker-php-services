@@ -55,6 +55,21 @@ services:
   networks:
    default:
     ipv4_address: ${NGINX_IP}
+ mailpit:
+  container_name: ${NAME}_mailpit
+  image: axllent/mailpit:latest
+  restart: on-failure
+  environment:
+   MP_MAX_MESSAGES: 5000
+   MP_DATABASE: /data/mailpit.db
+  ports:
+   - '1025:1025'
+   - '8025:8025'
+  volumes:
+   - ./.data/mailpit:/data
+  networks:
+   default:
+    ipv4_address: ${MAILPIT_IP}
 networks:
  default:
   driver: bridge
