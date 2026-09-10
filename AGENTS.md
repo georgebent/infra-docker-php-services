@@ -43,7 +43,7 @@
 - Base image: `php:8.5-fpm`
 - Nginx image: `nginx:1.28.2-alpine`
 - Runs as non-root user `www` with uid `1001`
-- Installed extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mbstring`, `intl`, `mongodb`, `xdebug`
+- Installed extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mbstring`, `intl`, `mongodb 2.5.2`, `xdebug`
 - Composer is available globally
 - OPcache is configured for local development in `etc/php/config/opcache.ini`
 

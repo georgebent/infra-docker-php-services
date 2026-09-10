@@ -38,7 +38,7 @@ RUN docker-php-ext-configure intl && docker-php-ext-install intl
 RUN docker-php-ext-install mbstring
 
 RUN apt-get install -y libssl-dev \
-    && pecl install mongodb \
+    && pecl install mongodb-2.5.2 \
     && docker-php-ext-enable mongodb
 
 RUN pecl install xdebug \

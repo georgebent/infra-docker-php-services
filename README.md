@@ -61,7 +61,7 @@ Nginx config files placed in `./etc/nginx/` are mounted directly to `/etc/nginx/
 
 - Base: `php:8.5-fpm`, runs as non-root user `www` (uid 1001)
 - Web server image: `nginx:1.28.2-alpine`
-- Extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mbstring`, `intl`, `mongodb`, XDebug
+- Extensions: `pdo`, `pdo_pgsql`, `pgsql`, `pdo_mysql`, `gd`, `zip`, `exif`, `pcntl`, `soap`, `xml`, `mbstring`, `intl`, `mongodb 2.5.2`, XDebug
 - Composer available globally
 - OPcache is configured for local development in `etc/php/config/opcache.ini`
 
