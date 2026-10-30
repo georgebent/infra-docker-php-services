@@ -27,6 +27,28 @@ services:
     ipv4_address: ${PHP_IP}
   extra_hosts:
    - "host.docker.internal:host-gateway"
+ php71:
+  container_name: ${NAME}_php71
+  build:
+   context: ./etc/php71
+  volumes:
+   - "./../services/:/srv/src/"
+  networks:
+   default:
+    ipv4_address: ${PHP71_IP}
+ mysql:
+  container_name: ${NAME}_mysql
+  image: mysql:5.7
+  restart: on-failure
+  environment:
+   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  ports:
+   - '3307:3306'
+  volumes:
+   - ./.data/mysql:/var/lib/mysql
+  networks:
+   default:
+    ipv4_address: ${MYSQL_IP}
  mongo:
   container_name: ${NAME}_mongo
   image: mongo:7
@@ -45,6 +67,7 @@ services:
   container_name: ${NAME}_nginx
   depends_on:
    - php
+   - php71
   image: nginx:1.28.2-alpine
   ports:
    - '8080:80'
