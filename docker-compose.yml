@@ -22,6 +22,7 @@ services:
    - "./../services/:/srv/src/"
    - "./etc/php/config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini"
    - "./etc/php/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
+   - "./etc/php/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
   networks:
    default:
     ipv4_address: ${PHP_IP}
