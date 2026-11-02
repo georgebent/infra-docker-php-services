@@ -22,11 +22,25 @@ services:
    - "./../services/:/srv/src/"
    - "./etc/php/config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini"
    - "./etc/php/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
+   - "./etc/php/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
   networks:
    default:
     ipv4_address: ${PHP_IP}
   extra_hosts:
    - "host.docker.internal:host-gateway"
+ mysql:
+  container_name: ${NAME}_mysql
+  image: mysql:8.4
+  restart: on-failure
+  environment:
+   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  ports:
+   - '3307:3306'
+  volumes:
+   - ./.data/mysql84:/var/lib/mysql
+  networks:
+   default:
+    ipv4_address: ${MYSQL_IP}
  mongo:
   container_name: ${NAME}_mongo
   image: mongo:7
