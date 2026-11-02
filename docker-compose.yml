@@ -30,14 +30,14 @@ services:
    - "host.docker.internal:host-gateway"
  mysql:
   container_name: ${NAME}_mysql
-  image: mysql:5.7
+  image: mysql:8.4
   restart: on-failure
   environment:
    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
   ports:
    - '3307:3306'
   volumes:
-   - ./.data/mysql:/var/lib/mysql
+   - ./.data/mysql84:/var/lib/mysql
   networks:
    default:
     ipv4_address: ${MYSQL_IP}
